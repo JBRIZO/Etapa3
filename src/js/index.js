@@ -1,4 +1,4 @@
-import { crearGraficoBarras } from './funcionGrafico.js';
+import { cambiarTipoGrafico, crearGraficoBarras } from './funcionGrafico.js';
 import { CategoriaService } from './services/CategoriaService.mjs';
 import { MarcaService } from './services/MarcaService.mjs';
 import { ProductoService } from './services/ProductoService.mjs';
@@ -8,13 +8,16 @@ const categoriaSelect = document.getElementById('categoria');
 const productoSelect = document.getElementById('producto');
 const marcaSelect = document.getElementById('marca');
 const form = document.getElementById('form');
+const radioContainer = document.getElementById('radioContainer');
 
 const categoriaService = new CategoriaService();
 const productoService = new ProductoService();
 const marcasService = new MarcaService();
 const ventasService = new VentaService();
 
-crearGraficoBarras([]);
+let currentGraphType = 'bar';
+
+crearGraficoBarras([], currentGraphType);
 
 categoriaService
   .getCategorias()
@@ -27,8 +30,8 @@ categoriaService
   .catch(error => alert(error));
 
 form.addEventListener('change', event => {
-  if(+categoriaSelect.value === 0 || +productoSelect.value === 0 || +marcaSelect.value === 0) crearGraficoBarras([]);
-  if (event.target.id === categoriaSelect.id) {
+  const target = event.target;
+  if (target.id === categoriaSelect.id) {
     productoSelect.options.length = 1;
     marcaSelect.options.length = 1;
     productoService
@@ -41,7 +44,7 @@ form.addEventListener('change', event => {
       });
   }
 
-  if (event.target.id === productoSelect.id) {
+  if (target.id === productoSelect.id) {
     marcaSelect.options.length = 1;
     marcasService.getMarcasByProducto(productoSelect.value).then(response => {
       response.forEach(element => {
@@ -51,16 +54,30 @@ form.addEventListener('change', event => {
     });
   }
 
+  if(+categoriaSelect.value === 0 || +productoSelect.value === 0 || +marcaSelect.value === 0) crearGraficoBarras([],currentGraphType);
+
   if (+productoSelect.value !== 0 && +marcaSelect.value !== 0) {
     const chartItems = [];
     ventasService.getVentasByMarca(marcaSelect.value).then(response => {
       response.forEach(venta => {
         chartItems.push({ mes: venta.mes, count: venta.count });
       });
-      crearGraficoBarras(chartItems);
+      crearGraficoBarras(chartItems, currentGraphType);
     });
   }
 });
+
+radioContainer.addEventListener('change', event => {
+  const target = event.target;
+
+  if (target.matches('#radioBarras')) {
+    currentGraphType = 'bar'
+    cambiarTipoGrafico(currentGraphType);
+  } else if (target.matches('#radioLineas')) {
+    currentGraphType = 'line'
+    cambiarTipoGrafico(currentGraphType);
+  }
+})
 
 const buildOption = (value, textContent) => {
   const option = document.createElement('option');
