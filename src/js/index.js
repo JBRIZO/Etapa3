@@ -54,7 +54,12 @@ form.addEventListener('change', event => {
     });
   }
 
-  if(+categoriaSelect.value === 0 || +productoSelect.value === 0 || +marcaSelect.value === 0) crearGraficoBarras([],currentGraphType);
+  if (
+    +categoriaSelect.value === 0 ||
+    +productoSelect.value === 0 ||
+    +marcaSelect.value === 0
+  )
+    crearGraficoBarras([], currentGraphType);
 
   if (+productoSelect.value !== 0 && +marcaSelect.value !== 0) {
     const chartItems = [];
@@ -71,13 +76,13 @@ radioContainer.addEventListener('change', event => {
   const target = event.target;
 
   if (target.matches('#radioBarras')) {
-    currentGraphType = 'bar'
+    currentGraphType = 'bar';
     cambiarTipoGrafico(currentGraphType);
   } else if (target.matches('#radioLineas')) {
-    currentGraphType = 'line'
+    currentGraphType = 'line';
     cambiarTipoGrafico(currentGraphType);
   }
-})
+});
 
 const buildOption = (value, textContent) => {
   const option = document.createElement('option');
