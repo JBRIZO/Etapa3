@@ -14,6 +14,8 @@ const productoService = new ProductoService();
 const marcasService = new MarcaService();
 const ventasService = new VentaService();
 
+crearGraficoBarras([]);
+
 categoriaService
   .getCategorias()
   .then(response => {
@@ -25,6 +27,7 @@ categoriaService
   .catch(error => alert(error));
 
 form.addEventListener('change', event => {
+  if(+categoriaSelect.value === 0 || +productoSelect.value === 0 || +marcaSelect.value === 0) crearGraficoBarras([]);
   if (event.target.id === categoriaSelect.id) {
     productoSelect.options.length = 1;
     marcaSelect.options.length = 1;
