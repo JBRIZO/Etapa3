@@ -7,6 +7,11 @@ export const crearGraficoBarras = (data, type) => {
   if (existingChart) {
     existingChart.destroy();
   }
+  data.sort((a, b) => {
+    const monthA = getNumeroMes(a.mes);
+    const monthB = getNumeroMes(b.mes);
+    return monthA - monthB;
+  });
   new Chart(document.getElementById(chartId), {
     type: type,
     data: {
@@ -27,4 +32,22 @@ export const cambiarTipoGrafico = chartType => {
     chart.config.type = chartType;
     chart.update();
   }
+};
+
+const getNumeroMes = mes => {
+  const meses = [
+    'Enero',
+    'Febrero',
+    'Marzo',
+    'Abril',
+    'Mayo',
+    'Junio',
+    'Julio',
+    'Agosto',
+    'Septiembre',
+    'Octubre',
+    'Noviembre',
+    'Diciembre',
+  ];
+  return meses.indexOf(mes);
 };

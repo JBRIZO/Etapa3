@@ -120,6 +120,11 @@
       "id": 12,
       "idProducto": 8,
       "nombreMarca": "Mastertech"
+    },
+    {
+      "id": 13,
+      "idProducto": 9,
+      "nombreMarca": "Razer"
     }
   ],
   "ventas": [
@@ -338,6 +343,24 @@
       "idMarca": 12,
       "mes": "Marzo",
       "count": 15
+    },
+    {
+      "id": 37,
+      "idMarca": 13,
+      "mes": "Febrero",
+      "count": 200
+    },
+    {
+      "id": 38,
+      "idMarca": 13,
+      "mes": "Enero",
+      "count": 250
+    },
+    {
+      "id": 39,
+      "idMarca": 13,
+      "mes": "Marzo",
+      "count": 100
     }
   ]
 }
